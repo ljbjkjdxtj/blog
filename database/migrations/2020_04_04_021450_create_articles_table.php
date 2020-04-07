@@ -17,10 +17,13 @@ class CreateArticlesTable extends Migration
             $table->bigIncrements('id');
             $table->string('author',20)->comment('作者');
             $table->string('title')->comment('题目');
+            $table->enum('type',['原创','转载'])->default('原创');
             $table->string('content')->comment('内容');
             $table->string('picture')->comment('描述图片');
-
-            //标签和分类模块放在新的表
+            $table->bigInteger('block_id')->unsigned();
+            $table->foreign('block_id')->references('id')->on('blocks');
+            $table->integer('view_count')->default(0);
+            $table->enum('isDelete',['0','1','2'])->default('0')->comment('0没删,1删了,2隐藏');
 
             $table->timestamps();
         });

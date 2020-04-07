@@ -25,7 +25,7 @@
 
     <link href="https://cdn.jsdelivr.net/npm/weathericons@2.1.0/css/weather-icons.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/fullcalendar@3.9.0/dist/fullcalendar.min.css" rel="stylesheet" />
-
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <style>
         #weatherWidget .currentDesc {
             color: #ffffff!important;
@@ -74,17 +74,20 @@
                 <li id="adminindex">
                     <a href="/admin/index"><i class="menu-icon fa fa-laptop"></i>Dashboard </a>
                 </li>
-                <li>
-                    <a href="/admin/index"><i class="menu-icon fa fa-laptop"></i>Dashboard </a>
+                <li id="adminboard">
+                    <a href="/admin/board"><i class="menu-icon fa fa-clipboard"></i>Board</a>
                 </li>
-                <li>
-                    <a href="/admin/index"><i class="menu-icon fa fa-laptop"></i>Dashboard </a>
+                <li id="adminlabel">
+                    <a href="/admin/label"><i class="menu-icon fa fa-bookmark"></i>Label </a>
                 </li>
-                <li>
-                    <a href="/admin/index"><i class="menu-icon fa fa-laptop"></i>Dashboard </a>
+                <li id="adminarticle">
+                    <a href="/admin/article"><i class="menu-icon fa fa-table"></i>Article </a>
                 </li>
-                <li>
-                    <a href="/admin/index"><i class="menu-icon fa fa-laptop"></i>Dashboard </a>
+                <li id="adminnotice">
+                    <a href="/admin/notice"><i class="menu-icon fa fa-bell"></i>Notice </a>
+                </li>
+                <li id="adminemail">
+                    <a href="/admin/email"><i class="menu-icon ti-email"></i>Email </a>
                 </li>
             </ul>
         </div><!-- /.navbar-collapse -->
@@ -92,7 +95,7 @@
 </aside>
 <!-- /#left-panel -->
 <!-- Right Panel -->
-<div id="right-panel" class="right-panel">
+<div id="right-panel" class="right-panel" style="height: 80%;">
     <!-- Header-->
     <header id="header" class="header">
         <div class="top-left" style="height: 100%;width:auto;">
@@ -105,13 +108,6 @@
         <div class="top-right">
             <div class="header-menu">
                 <div class="header-left">
-                    <button class="search-trigger"><i class="fa fa-search"></i></button>
-                    <div class="form-inline">
-                        <form class="search-form">
-                            <input class="form-control mr-sm-2" type="text" placeholder="Search ..." aria-label="Search">
-                            <button class="search-close" type="submit"><i class="fa fa-close"></i></button>
-                        </form>
-                    </div>
 
                     <div class="dropdown for-notification">
                         <button class="btn btn-secondary dropdown-toggle" type="button" id="notification" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -174,7 +170,10 @@
                                     <p>Lorem ipsum dolor sit amet, consectetur</p>
                                 </div>
                             </a>
+
                         </div>
+
+
                     </div>
                 </div>
 
@@ -204,24 +203,24 @@
     <!-- /#header -->
     @yield('content')
     <!-- Footer -->
-    <footer class="site-footer">
+    <div style="background-color: #1b4b72">
+    <footer style="position:fixed;bottom:0px;right:0px;width: 100%;height:70px;line-height: 70px;text-align:right;">
         <div class="footer-inner bg-white">
             <div class="row">
-                <div class="col-sm-6">
-                    Copyright &copy; 2018 Ela Admin
-                </div>
-                <div class="col-sm-6 text-right">
-                    More Templates <a href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a> - Collect from <a href="http://www.cssmoban.com/" title="网页模板" target="_blank">网页模板</a>
+                <div class="col-sm-6 offset-sm-6">
+                    Copyright &copy; 2020 Jean &nbsp;&nbsp;&nbsp;
                 </div>
             </div>
         </div>
     </footer>
+    </div>
     <!-- /.site-footer -->
 </div>
 <!-- /#right-panel -->
 
 <!-- Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.js"></script>
+@yield('javascript')
 <script>
     //判断当前哪个选中
     var route = $("#route").text().split('/').join('')

@@ -16,6 +16,7 @@ class CreateBlocksTable extends Migration
         Schema::create('blocks', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('block')->comment('版块名');
+            $table->enum('isDelete',['0','1'])->default('0')->comment('0没删,1删了');
             $table->timestamps();
         });
     }

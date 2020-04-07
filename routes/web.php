@@ -29,5 +29,15 @@ Route::prefix('admin')->group(function () {
     Route::get('index', 'AdminController@index');
     Route::post('logout','AdminController@logout');
 
+    Route::get('board','AdminController@board');
+    Route::post('board','AdminController@addBoard');
+    Route::put('board','AdminController@modifyBoard');
+    Route::delete('board','AdminController@deleteBoard');
+
+    Route::get('label','AdminController@label');
+    Route::post('label','AdminController@addLabel');
+    Route::put('label','AdminController@modifyLabel');
+    Route::delete('label','AdminController@deleteLabel');
+
 });
 
