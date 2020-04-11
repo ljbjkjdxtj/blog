@@ -26,6 +26,7 @@
     <link href="https://cdn.jsdelivr.net/npm/weathericons@2.1.0/css/weather-icons.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/fullcalendar@3.9.0/dist/fullcalendar.min.css" rel="stylesheet" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    @yield('css')
     <style>
         #weatherWidget .currentDesc {
             color: #ffffff!important;
@@ -64,9 +65,9 @@
     </style>
 </head>
 
-<body>
+<body style="background-color: #f1f2f7">
 <!-- Left Panel -->
-<aside id="left-panel" class="left-panel">
+<aside id="left-panel" class="left-panel" style=" z-index:5">
     <nav class="navbar navbar-expand-sm navbar-default">
         <div id="main-menu" class="main-menu collapse navbar-collapse">
             <ul class="nav navbar-nav">
@@ -203,7 +204,7 @@
     <!-- /#header -->
     @yield('content')
     <!-- Footer -->
-    <div style="background-color: #1b4b72">
+    <div style="background-color: #1b4b72; z-index:999;">
     <footer style="position:fixed;bottom:0px;right:0px;width: 100%;height:70px;line-height: 70px;text-align:right;">
         <div class="footer-inner bg-white">
             <div class="row">

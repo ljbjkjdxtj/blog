@@ -100,7 +100,7 @@
                 </div>
                 <div class="modal-body">
                     <form>
-                        <input type="text" id="modifyId">
+                        <input type="text" id="modifyId" hidden>
                         <div class="form-group">
                             <label for="modifyLabelName" class="col-form-label">Label</label>
                             <input type="text" class="form-control" id="modifyLabelName">
@@ -125,7 +125,7 @@
                     </button>
                 </div>
                 <div class="modal-body" style="text-align: center">
-                    <input type="text" name="deleteId" id="deleteId" >
+                    <input type="text" name="deleteId" id="deleteId" hidden>
                     <h5>确认删除？</h5>
                 </div>
                 <div class="modal-footer">

@@ -39,5 +39,15 @@ Route::prefix('admin')->group(function () {
     Route::put('label','AdminController@modifyLabel');
     Route::delete('label','AdminController@deleteLabel');
 
+    Route::post('uploadImg','AdminController@uploadPicture');
+    Route::get('article','AdminController@article');
+    Route::get('getAllLabels','AdminController@getAllLabels');
+    Route::get('getArticleLabels','AdminController@getArticleLabels');
+    Route::get('newArticle','AdminController@getNewArticle');
+    Route::post('article','AdminController@addArticle');
+    Route::get('modifyArticle','AdminController@getModifyArticle');
+    Route::put('article','AdminController@modifyArticle');
+    Route::delete('article','AdminController@deleteArticle');
+
 });
 

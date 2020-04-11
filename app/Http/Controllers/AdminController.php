@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Article;
+use App\Article_label;
 use App\Block;
 use App\Label;
 use App\User;
@@ -11,6 +12,8 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
 {
@@ -161,6 +164,183 @@ class AdminController extends Controller
             'isDelete' => '1'
         ]);
 
+        return response()->json(['message' => '删除成功'], Response::HTTP_CREATED);
+    }
+
+    public function article(){
+        $articles = Article::where('isDelete','!=','1')->with('block')->paginate(10);
+        return view('admin.article')->with('articles',$articles);
+    }
+
+    public function getAllLabels(){
+        $labels = Label::where('isDelete','0')->get();
+        $arr = [];
+        $i = 0;
+
+        foreach($labels as $item){
+            $arr[$i]['label'] = $item['label'];
+            $arr[$i]['value'] = $item['id'];
+            $i = $i + 1;
+        }
+        return $arr;
+    }
+
+    public function getArticleLabels(Request $request){
+        $id = $request->id;
+        $arr = [];
+        $i = 0;
+        $labels = Article_label::where('article_id',$id)->with('labels')->get();
+        foreach ($labels as $item){
+            $arr[$i] = $item['labels'][0]['id'];
+            $i = $i +1;
+        }
+        return $arr;
+    }
+
+    /**
+     * 新增文章页面
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getNewArticle(){
+        $boards = Block::where('isDelete','0')->get();
+        return view('admin.newArticle')->with([
+            'boards' => $boards
+        ]);
+    }
+
+    //上传图片
+    public function uploadPicture(Request $request){
+        $type = $request->file('file')->getMimeType();
+        if($type == 'image/jpeg' || $type == 'image/png'){
+            $path = $request->file('file')->store('public/img');
+            $temp=substr(Storage::url($path),1);
+            $filename = explode('/', Storage::url($path));
+            $address = "/storage/img/".$filename[3];
+            return $address;
+        }else{
+            return "文件类型错误";
+        }
+    }
+
+    public function addArticle(Request $request){
+
+        $title = $request->title;
+        $type = $request->type;
+        $content = $request->newcontent;
+        $picture = $request->picture;
+        $board_id = $request->board_id;
+
+        //标签
+        $label = explode(',', $request->label);
+        $isDelete = $request->isDelete;
+
+        $article = new Article();
+        $article->author = Auth::user()['name'];
+        $article->title = $title;
+        $article->type = $type;
+        $article->content = $content;
+        $article->picture = $picture;
+        $article->block_id = $board_id;
+        $article->isDelete = $isDelete;
+
+        $article->save();
+        $id = $article->id;
+
+        if(count($label)){
+            for($i = 0;$i < count($label); $i++){
+                $newLabel = new Article_label();
+                $newLabel->article_id = $id;
+                $newLabel->label_id = $label[$i];
+                $newLabel->save();
+            }
+        }
+
+        return response()->json(['message' => '保存成功'], Response::HTTP_CREATED);
+
+    }
+
+    public function getModifyArticle(Request $request){
+        $id = $request->id;
+        $article = Article::where('id',$id)->get();
+        $boards = Block::where('isDelete','0')->get();
+        return view('admin.modifyArticle')->with([
+            'article'=> $article[0],
+            'boards' => $boards
+        ]);
+    }
+
+    public function modifyArticle(Request $request){
+        $id = $request->id;
+        $title = $request->title;
+        $type = $request->type;
+        $content = $request->newcontent;
+        $board_id = $request->board_id;
+        Log::info($id);
+
+        //标签
+        $label = explode(',', $request->label);
+        $isDelete = $request->isDelete;
+
+        if($request->isUpload == 'no'){
+            $article = Article::where('id',$id)->update([
+                'title' => $title,
+                'type' => $type,
+                'content' => $content,
+                'block_id' => $board_id,
+                'isDelete' => $isDelete
+            ]);
+        }else{
+            $article = Article::where('id',$id)->update([
+                'title' => $title,
+                'type' => $type,
+                'content' => $content,
+                'block_id' => $board_id,
+                'isDelete' => $isDelete,
+                'picture' => $request->picture
+            ]);
+        }
+
+        if(count($label) == 0){
+            Article_label::where('article_id',$id)->delete();
+            return response()->json(['message' => '保存成功'], Response::HTTP_CREATED);
+        }else{
+            //获取现在有的标签id
+            $now = [];
+            $i = 0;
+            $nowLabels = Article_label::where('article_id',$id)->with('labels')->get();
+            foreach ($nowLabels as $item){
+                $now[$i] = $item['labels'][0]['id'];
+                $i = $i +1;
+            }
+
+            //前者有后者没有
+            $cha = array_diff($now,$label);
+            foreach($cha as $item){
+                Article_label::where('article_id',$id)->where('label_id',$item)->delete();
+            }
+
+            $cha2 = array_diff($label,$now);
+
+            foreach ($cha2 as $item) {
+                if($item != '') {
+                    $article_label = new Article_label();
+                    $article_label->article_id = $id;
+                    $article_label->label_id = $item;
+                    $article_label->save();
+                }
+            }
+
+            return response()->json(['message' => '保存成功'], Response::HTTP_CREATED);
+        }
+
+
+    }
+
+    public function deleteArticle(Request $request){
+        $id = $request->id;
+        Article::where('id',$id)->update([
+           'isDelete' => '1'
+        ]);
         return response()->json(['message' => '删除成功'], Response::HTTP_CREATED);
     }
 

@@ -1,49 +1,93 @@
 @extends('layouts.app')
+@section('css')
+    <style>
+        ul.pagination {
+            /*display: inline-block;*/
+            padding: 0;
+            width:80%;
+            margin: 0 auto;
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+        }
 
+        .page-item {display: inline;}
+
+        .page-item a {
+            color: black;
+            float: left;
+            padding: 8px 16px;
+            text-decoration: none;
+            transition: background-color .3s;
+            border: 1px solid #ddd;
+            margin: 0 4px;
+        }
+
+        .page-item span {
+            color: grey;
+            float: left;
+            padding: 8px 16px;
+            text-decoration: none;
+            transition: background-color .3s;
+            border: 1px solid #ddd;
+            margin: 0 4px;
+        }
+
+        .page-item a.active {
+            background-color: #4CAF50;
+            color: white;
+            border: 1px solid #4CAF50;
+        }
+
+        .page-item a:hover:not(.active) {background-color: #ddd;}
+    </style>
+@endsection
 @section('content')
 		<div id="main" class="content">
 			<div class="container">
 				<article itemscope="itemscope">
 					<div class="posts-list js-posts">
 
+                        @foreach($articles as $article)
 						<div class="post post-layout-list" data-aos="fade-up">
 							<div class="postnormal review ">
 								<div class="post-container review-item">
 									<div class="row review-item-wrapper">
 										<div class="col-sm-3">
-											<a rel="nofollow" href="/detail">
-												<div class="review-item-img" style="background-image: url(statics/images/yarn-150x150.jpg);"></div>
+											<a rel="nofollow" href="/detail?id={{$article['id']}}">
+												<div class="review-item-img" style="background-image: url({{$article['picture']}});"></div>
 											</a>
 										</div>
 										<div class="col-sm-9 flex-xs-middle">
 											<div class="review-item-title">
-												<a href="/detail" rel="bookmark">我才不会写年终总结之瞎说篇</a>
+												<a href="/detail?id={{$article['id']}}" rel="bookmark">{{$article['title']}}</a>
 											</div>
-											<div class="review-item-creator"><b>发布日期：</b>2017-12-30</div>
-{{--											<span class="review-item-info"><b>总浏览量：</b>1203 reads</span>--}}
+											<div class="review-item-creator"><b>发布日期：</b>{{$article['created_at']->diffForHumans()}}</div>
+											<span class="review-item-info">Author:{{$article['author']}}</span>
 										</div>
 									</div>
 									<div class="review-bg-wrapper">
-										<div class="bg-blur" style="background-image: url(statics/images/yarn-150x150.jpg);"></div>
+										<div class="bg-blur" style="background-image: url({{$article['picture']}});"></div>
 									</div>
 								</div>
 								<div class="post-container">
-									<div class="entry-content">确实讨厌去写所谓的年终总结，在公司已经被动的想领导上交一个总结，自己就懒得去总结，不然，我觉得脑子里应该会编写出八九不离十的内容，所以正经八儿的事情略了，瞎说一下。 年初的人事调动是个人最不能接受的事情，但不接受也得接受，老板一句“这是命令...</div>
+{{--									<div class="entry-content"></div>--}}
 									<div class="post-footer">
-										<a class="gaz-btn primary" href="/detail">READ MORE</a>
-										<span class="total-comments-on-post pull-right"><a href="">31 Comments</a></span>
+										<a class="gaz-btn primary" href="/detail?id={{$article['id']}}">READ MORE</a>
+{{--										<span class="total-comments-on-post pull-right"><a href="">31 Comments</a></span>--}}
 									</div>
 								</div>
 							</div>
 						</div>
-
+                        @endforeach
 
 					</div>
 					<!-- post-formats end Infinite Scroll star -->
 					<!-- post-formats -->
-					<div class="pagination js-pagination">
-						<div class="js-next pagination__load">
-							<a href=""><i class="iconfont">&#xe605;</i></a>
+					<div>
+						<div>
+
+							{{$articles->links()}}
 						</div>
 					</div>
 					<!-- -pagination  -->
