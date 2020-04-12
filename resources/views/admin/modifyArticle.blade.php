@@ -158,7 +158,10 @@
                 width   : "100%",
                 height  : 640,
                 syncScrolling : "single",
-                path    : "/editor/lib/"
+                path    : "/editor/lib/",
+                theme           : "night",
+                editorTheme     : "neo",
+                previewTheme    : "night",
             });
         });
 

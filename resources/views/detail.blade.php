@@ -1,6 +1,8 @@
 @extends('layouts.app')
 @section('css')
-
+{{--    <link rel="stylesheet" type="text/css" href="/editor/css/editormd.css">--}}
+    <link rel="stylesheet" type="text/css" href="/hightlight/styles/a11y-dark.css">
+    <link rel="stylesheet" href="/css/markdown.css">
 @endsection
 @section('content')
 		<div id="main" class="content">
@@ -31,11 +33,18 @@
                                 </div>
                             @endif
                         </div>
-						<div class="post-body js-gallery">
+						<div class="js-gallery">
                             <div id="layout"  class="editor">
                                 <div id="test-editormd">
                                     <textarea style="display:none;" placeholder="markdown语言">{{$article['content']}}</textarea>
                                 </div>
+{{--                                <pre>--}}
+{{--                                    <code class="language-css">--}}
+{{--		                                    .div{--}}
+{{--                                                    width : 100px--}}
+{{--                                            }--}}
+{{--                                    </code>--}}
+{{--                                </pre>--}}
                             </div>
 						</div>
                         <div class="meta split split--responsive cf">
@@ -173,6 +182,14 @@
 <script src="/editor/lib/flowchart.min.js"></script>
 <script src="/editor/lib/jquery.flowchart.min.js"></script>
 <script src="/editor/editormd.js"></script>
+<script src="/hightlight/highlight.pack.js"></script>
+<script>
+    hljs.initHighlightingOnLoad();
+    $('pre code').each(function(i, block) {
+        hljs.highlightBlock(block);
+    });
+</script>
+
     <script>
         editormd.markdownToHTML("test-editormd", {
             htmlDecode      : "style,script,iframe",
@@ -183,4 +200,7 @@
             sequenceDiagram : true  // 默认不解析
         });
     </script>
+<script type="text/javascript">
+    $('pre').addClass("line-numbers").css("white-space", "pre-wrap");
+</script>
 @endsection
