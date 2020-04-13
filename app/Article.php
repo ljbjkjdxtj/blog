@@ -10,6 +10,6 @@ class Article extends Model
 
     public function block()
     {
-        return $this->hasOne(Block::class,'id','block_id');
+        return $this->hasOne(Block::class,'id','article_id');
     }
 }

@@ -47,7 +47,11 @@
 			<div class="container">
 				<article itemscope="itemscope">
 					<div class="posts-list js-posts">
-
+                        @if(count($articles) == 0)
+                            <div style="width: 100%;text-align: center">
+                                <h1>没有文章</h1>
+                            </div>
+                        @endif
                         @foreach($articles as $article)
 						<div class="post post-layout-list" data-aos="fade-up">
 							<div class="postnormal review ">
@@ -62,7 +66,7 @@
 											<div class="review-item-title">
 												<a href="/detail?id={{$article['id']}}" rel="bookmark">{{$article['title']}}</a>
 											</div>
-											<div class="review-item-creator"><b>发布日期：</b>{{$article['created_at']->diffForHumans()}}</div>
+											<div class="review-item-creator"><b>更新日期：</b>{{$article['updated_at']->diffForHumans()}}</div>
 											<span class="review-item-info">Author:{{$article['author']}}</span>
 										</div>
 									</div>

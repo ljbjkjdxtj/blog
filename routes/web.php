@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'HomeController@index');
+Route::get('/index', 'HomeController@index');
 Route::get('/archives','HomeController@archives');
 Route::get('/detail','HomeController@detail');
 Route::get('/gustBook','HomeController@gustBook');
@@ -26,6 +27,7 @@ Route::prefix('admin')->group(function () {
     Route::get('login','AdminController@getLoginView');
     Route::post('login','AdminController@login');
 
+    Route::get('/', 'AdminController@index');
     Route::get('index', 'AdminController@index');
     Route::post('logout','AdminController@logout');
 

@@ -28,10 +28,9 @@
         <div>
             <div id="search-container" class="ajax_search">
                 <form method="get" id="searchform" action="">
-                    <div class="filter_container"><input type="text" value="" autocomplete="off" placeholder="Type then select or enter" name="s" id="search-input" />
+                    <div class="filter_container"><input type="text" value="" autocomplete="off" placeholder="Type then select or enter" name="keyword" id="search-input" />
                         <ul id="search_filtered" class="search_filtered"></ul>
                     </div>
-                    <input type="submit" name="submit" id="searchsubmit" class="searchsubmit" value="" />
                 </form>
             </div>
         </div>
@@ -55,24 +54,14 @@
                             <li id="menu-item-173" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-173">
                                 <a href="/update">更新</a>
                             </li>
-                            <li id="menu-item-78" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-78">
-                                <a href="/link">链接</a>
-                            </li>
                             <li id="menu-item-252" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-252">
-                                <a href="/archives">归档</a>
+                                <a>归档</a>
                                 <ul class="sub-menu">
+                                    @foreach($boards as $board)
                                     <li id="menu-item-165" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-165">
-                                        <a href="">theme</a>
+                                        <a href="/index?board={{$board['id']}}">{{$board['block']}}</a>
                                     </li>
-                                    <li id="menu-item-163" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-163">
-                                        <a href="">Happen</a>
-                                    </li>
-                                    <li id="menu-item-924" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-924">
-                                        <a href="">WeWork</a>
-                                    </li>
-                                    <li id="menu-item-164" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-164">
-                                        <a href="">WordPress</a>
-                                    </li>
+                                    @endforeach
                                 </ul>
                             </li>
                             <li id="menu-item-57" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-57">
