@@ -17,6 +17,11 @@
 							margin: 0 auto
 						}
 					</style>
+                    <div style="width:30%;">
+                        <ul id="tree" class="ztree" style="width: 260px; overflow: auto; position: fixed; z-index: 2147483647; border: 0px none; left: 0px; bottom: 0px;">
+                            <!-- 目录内容在网页另存为之后将插入到此处 -->
+                        </ul>
+                    </div>
 					<section class="post_content">
 						<header class="post_header">
 							<h1 class="post_title">{{$article['title']}}</h1>
@@ -35,8 +40,8 @@
                         </div>
 						<div class="js-gallery">
                             <div id="layout"  class="editor">
-                                <div id="test-editormd">
-                                    <textarea style="display:none;" placeholder="markdown语言">{{$article['content']}}</textarea>
+                                <div id="test-editormd" class="markdown-body">
+                                    <p style="display:none;" id="content">{{$article['content']}}</p>
                                 </div>
 {{--                                <pre>--}}
 {{--                                    <code class="language-css">--}}
@@ -172,35 +177,18 @@
 @endsection
 
 @section('javascript')
-{{--    <link rel="shortcut icon" href="https://pandao.github.io/editor.md/favicon.ico" type="image/x-icon" />--}}
-{{--    <script src="/editor/jquery.min.js"></script>--}}
-<script src="/editor/lib/marked.min.js"></script>
-<script src="/editor/lib/prettify.min.js"></script>
-<script src="/editor/lib/raphael.min.js"></script>
-<script src="/editor/lib/underscore.min.js"></script>
-<script src="/editor/lib/sequence-diagram.min.js"></script>
-<script src="/editor/lib/flowchart.min.js"></script>
-<script src="/editor/lib/jquery.flowchart.min.js"></script>
-<script src="/editor/editormd.js"></script>
+<script src="https://cdn.bootcss.com/showdown/1.3.0/showdown.min.js"></script>
 <script src="/hightlight/highlight.pack.js"></script>
-<script>
+<script src="/js/copy.js"></script>
+<script type="text/javascript">
+    var content = $("#content").text(); //使用el表达式获取后台返回的markdown内容
+    var converter = new showdown.Converter(); //初始化转换器
+    var htmlcontent  = converter.makeHtml(content); //将MarkDown转为html格式的内容
+    $("#test-editormd").html(htmlcontent);//添加到 div 中 显示出来
     hljs.initHighlightingOnLoad();
     $('pre code').each(function(i, block) {
         hljs.highlightBlock(block);
     });
 </script>
 
-    <script>
-        editormd.markdownToHTML("test-editormd", {
-            htmlDecode      : "style,script,iframe",
-            emoji           : true,
-            taskList        : true,
-            tex             : true,  // 默认不解析
-            flowChart       : true,  // 默认不解析
-            sequenceDiagram : true  // 默认不解析
-        });
-    </script>
-<script type="text/javascript">
-    $('pre').addClass("line-numbers").css("white-space", "pre-wrap");
-</script>
 @endsection

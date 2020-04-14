@@ -124,19 +124,19 @@
     </div>
     <div class="socialize" data-aos="zoom-in">
         <li>
-            <a title="weibo" class="socialicon" href=""><i class="iconfont" aria-hidden="true">&#xe601;</i></a>
+            <a title="邮箱" class="socialicon"  href="mailto:lj_nobug@foxmail.com" target="_blank"><img class="iconfont" aria-hidden="true" src="/images/youxiang1.png"></a>
         </li>
         <li class="wechat">
-            <a class="socialicon"><i class="iconfont">&#xe609;</i></a>
-            <div class="wechatimg"><img src="statics/images/49D3746D-7519-B709-83E4-65BD1927C4E7.jpg"></div>
+            <a title="github" class="socialicon" href="https://github.com/ljbjkjdxtj" target="_blank"><img class="iconfont" src="/images/git.png"></a>
+{{--            <div class="wechatimg"><img src="statics/images/49D3746D-7519-B709-83E4-65BD1927C4E7.jpg"></div>--}}
         </li>
         <li>
-            <a title="QQ" class="socialicon" href="" target="_blank"><i class="iconfont" aria-hidden="true">&#xe616;</i></a>
+            <a title="CSDN" class="socialicon" href="https://blog.csdn.net/qq_42094066" target="_blank"><img class="iconfont" aria-hidden="true" src="/images/csdn.png"></a>
+
         </li>
     </div>
     <div class="cr">
-        Copyright&copy;2018. Design by
-        <a href="">17sucai</a>
+        Copyright&copy;2020. by Jean
     </div>
 </footer>
 
